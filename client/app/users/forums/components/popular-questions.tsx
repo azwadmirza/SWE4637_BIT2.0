@@ -109,7 +109,7 @@ const FAQ = () => {
                                     <IonIcon icon={chatboxEllipsesSharp} className="text-white"/>
                                 </button>
                                 </div>
-                                {showComments[index] && (<Comments disable={false} comments={samplecommentsWithUsernameAndDatetime}/>)}
+
                             </Card.Footer>
                         </Card>
                     ))}

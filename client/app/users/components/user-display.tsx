@@ -1,17 +1,25 @@
 "use client";
+import { getUser } from "@/app/lib/requests";
 import { useEffect, useState } from "react";
 
 interface IUserDisplay{
-    open:boolean;
-    username:string;
-    active:boolean;
-    rating:number;
-    rank:string;
+
 }
 
-const UserDisplay = ({open,username,active,rating,rank}:IUserDisplay) => {
+const UserDisplay = ({}:IUserDisplay) => {
     const [titleColor,setTitleColor]=useState("text-gray-200");
+    const [username,setUsername]=useState("User");
+    const [rank,setRank]=useState("bronze");
+    
+    const rating=1000;
+    const fetchUser=async()=>{
+        const response=await getUser();
+        const data=await response.json();
+        console.log(data);
+        setUsername(data.user.username);
+    }
     useEffect(()=>{
+        fetchUser();
         switch(rank){
             case "bronze":
                 setTitleColor("text-bronze-500");
@@ -39,17 +47,9 @@ const UserDisplay = ({open,username,active,rating,rank}:IUserDisplay) => {
                 {rating}
       </div>
       <h1
-      className={`origin-left font-medium text-xl duration-200 ${
-        !open && "scale-0"
-      } ${titleColor}`}
+      className={`origin-left font-medium text-xl duration-200 ${titleColor}`}
     >
       {username}
-      {active && (<div className="bg-green-800 border-2 border-green-950 rounded-xl flex xl:w-1/4 w-1/2">
-        <div className="py-1 px-2">
-        <span className="flex w-3 h-3 me-3 bg-green-500 rounded-full"></span>
-        </div>
-        <span className="text-sm text-white">Available</span>
-      </div>)}
     </h1>
     </div>
   );

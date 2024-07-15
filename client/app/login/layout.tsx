@@ -1,18 +1,16 @@
-import Footer from "../components/footer";
-import NavBar from "../components/navbar";
+import Footer from "@/app/components/footer";
 
 const LoginLayout = ({
     children,
   }: Readonly<{
     children: React.ReactNode;
   }>) => {
-    return (
-      <>
-      <NavBar/>
-      {children}
-      <Footer/>
-      </>
-    );
-  };
-  
-  export default LoginLayout;
+    return ( 
+        <div className="w-full">
+            {children}
+            <Footer/>
+        </div>
+     );
+}
+ 
+export default LoginLayout;

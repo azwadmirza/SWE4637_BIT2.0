@@ -1,38 +1,110 @@
-import { login } from "../utils/login";
-import { register } from "../utils/signup";
 
-const server:string|undefined=process.env.EXPRESS_SERVER;
-
-   export async function postLogin(data:login){
-    return fetch(`${server}/api/users/login`,{
-      method:'POST',
-      body:JSON.stringify(data),
-      headers:{
-          'Content-Type':'application/json'
-      }
+    export async function getUser() {
+    return fetch("http://localhost:8000/auth/get-user", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
     });
   }
   
-  export async function postSignUp(data:register){
-    return fetch(`${server}/api/users/register`,{
-      method:'POST',
-      body:JSON.stringify(data),
-      headers:{
-          'Content-Type':'application/json'
-      }
+  export async function getGroups() {
+    return fetch("http://localhost:8000/group/groups", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
     });
   }
-
-  export async function postQuery(data:string){
-    console.log("Question Asked");
-    return fetch(`http://localhost:11434/api/generate`,{
-      method:'POST',
-      body:JSON.stringify({
-        model: "llama2",
-        prompt:`${data}`,
-      }),
-      headers:{
-          'Content-Type':'application/json'
-      }
+  
+  export async function createGroup(data: any) {
+    return fetch("http://localhost:8000/group/groups", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
     });
   }
+  
+  export async function getGroupById(data: any) {
+    return fetch("http://localhost:8000/group/groups/" + data, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+    });
+  }
+  
+  export async function addPostToGroup(id: any, data: any) {
+    console.log(id, data);
+    return fetch("http://localhost:8000/group/groups/" + id + "/posts", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+    });
+  }
+  
+  export async function addCommentToPost(id: any, postId: any, data: any) {
+    console.log(id, data);
+    return fetch(
+      "http://localhost:8000/group/groups/" +
+        id +
+        "/posts/" +
+        postId +
+        "/comments",
+      {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("access")}`,
+        },
+      }
+    );
+  }
+  
+  export async function createForumPost(data: {
+    user: string;
+    question: string;
+    answer: string;
+  }) {
+    console.log(data);
+    return fetch("http://localhost:8000/forum/forum", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+    });
+  }
+  
+  export async function getAllForumPosts() {
+    return fetch("http://localhost:8000/forum/forum", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+    });
+  }
+  
+  export async function updateProfile(profileData: any): Promise<Response> {
+    return fetch("http://localhost:8000/profile/update", {
+      method: "PUT",
+      body: JSON.stringify(profileData),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access")}`,
+      },
+    });
+  }
+  

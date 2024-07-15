@@ -1,5 +1,5 @@
 "use client";
-import { postQuery } from "@/app/lib/requests";
+import { createForumPost, postQuery } from "@/app/lib/requests";
 import Loading from "@/app/loading";
 import { useState } from "react";
 import { set } from "react-hook-form";
@@ -29,13 +29,26 @@ const AskQuestion = () => {
             index++;
         }
         setResponse(result);
+        const user=localStorage.getItem("id");
+        if(user){
+            await createForumPost({
+                user,
+                question:question,
+                answer:result
+            })
+        }
         setLoading(false);
         
     }
 
+    const acceptResponse=()=>{
+        setResponse("");
+        window.location.reload();
+    }
+
 
     return (  
-        <div className="w-full">
+        <div className="w-full mt-6">
             <div className="w-full flex justify-start text-white font-bold ms-6">
                 <h1 className="text-4xl font-bold">Ask a Question</h1>
             </div>
@@ -52,6 +65,7 @@ const AskQuestion = () => {
                 <div className="w-full flex justify-start bg-yellow-400 text-bitBrown rounded-xl p-8">
                     {response}
                 </div>
+                <button className="w-full bg-yellow-400 hover:bg-yellow-600 text-bitBrown rounded-lg p-2 mt-4" onClick={()=>acceptResponse()}>Accept Response</button>
             </div>)}
         </div>
     );

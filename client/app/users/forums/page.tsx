@@ -11,9 +11,6 @@ const ForumsPage = () => {
             <div className="w-full flex justify-start text-white font-bold ms-6">
                 <PreviouslyAsked/>
             </div>
-            <div className="w-full flex justify-start text-white font-bold ms-6">
-                <PopularQuestionsAndResponses/>
-            </div>
         </main>
      );
 }

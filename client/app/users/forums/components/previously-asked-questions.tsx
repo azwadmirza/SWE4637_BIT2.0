@@ -2,107 +2,67 @@
 import { IonIcon } from "@ionic/react";
 import { chatboxEllipsesSharp } from "ionicons/icons";
 import { Card } from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Comments from "../../groups/[id]/components/comments";
 import usePagination from "@/app/hooks/usePagination";
 import Pagination from "../../components/pagination";
+import { getAllForumPosts } from "@/app/lib/requests";
 
 const PreviouslyAsked = () => {
-    const samplePreviouslyAskedWithUsernameAndDatetime=[
-        {
-            id:1,
-            question:"question 1",
-            answer:"answer 1",
-            username:"user1",
-            datetime:"2021-10-01T00:00:00"
-        },
-        {
-            id:2,
-            question:"question 2",
-            answer:"answer 2",
-            username:"user2",
-            datetime:"2021-10-02T00:00:00"
-        },
-        {
-            id:3,
-            question:"question 3",
-            answer:"answer 3",
-            username:"user3",
-            datetime:"2021-10-03T00:00:00"
-        },
-    ]
     
-    const [showComments, setShowComments] = useState(Array(samplePreviouslyAskedWithUsernameAndDatetime.length).fill(false));
+    const [loading,setLoading]=useState(false);
+    const [forumMaterials,setForumMaterials]=useState([]);
+    useEffect(()=>{
+        setLoading(true);
+        getAllForumPosts().then((response)=>{
+            if(response.status===200){
+                response.json().then((data)=>{
+                    setForumMaterials(data);
+                    setLoading(false);
+                })
+            }
+        }
+        )
+    },[]);
+    const [showComments, setShowComments] = useState(Array(forumMaterials.length).fill(false));
 
-    const samplecommentsWithUsernameAndDatetime=[
-        {
-            id:1,
-            title:"title 1",
-            content:"content 1",
-            username:"user1",
-            datetime:"2021-10-01T00:00:00"
-        },
-        {
-            id:2,
-            title:"title 2",
-            content:"content 2",
-            username:"user2",
-            datetime:"2021-10-02T00:00:00"
-        },
-        {
-            id:3,
-            title:"title 3",
-            content:"content 3",
-            username:"user3",
-            datetime:"2021-10-03T00:00:00"
-        },
-    ]
 
     const toggleComments = (index:number) => {
         if(showComments[index]){
-            setShowComments(Array(samplePreviouslyAskedWithUsernameAndDatetime.length).fill(false));
+            setShowComments(Array(forumMaterials.length).fill(false));
             return;
         }
-        const newShowComments = Array(samplePreviouslyAskedWithUsernameAndDatetime.length).fill(false);
+        const newShowComments = Array(forumMaterials.length).fill(false);
         newShowComments[index] = !newShowComments[index];
         setShowComments(newShowComments);
     }
 
-    const {currentPage,getCurrentItems,totalPages,handlePageChange}=usePagination(4,samplePreviouslyAskedWithUsernameAndDatetime);
+    const {currentPage,getCurrentItems,totalPages,handlePageChange}=usePagination(4,forumMaterials);
     const items= getCurrentItems();
 
     return ( 
             <div className="w-full m-4">
-            <h1 className="text-3xl">History</h1>
+            <h1 className="text-3xl">Existing Questions Answered</h1>
             <div className={`w-full flex justify-end`}>
             </div>
             <Card className="w-full z-0">
                 <Card.Body>
-                    {samplePreviouslyAskedWithUsernameAndDatetime.map((post,index)=>(
-                        <Card key={post.id} className="mb-2 rounded-xl shadow-lg p-2 bg-white m-4">
+                    {forumMaterials.map((post:any,index)=>(
+                        <Card key={post._id} className="mb-2 rounded-xl shadow-lg p-2 bg-white m-4">
                             <Card.Header className="w-full bg-yellow-400 text-bitBrown p-2">
                                 <div className="w-full">
                                  <h1 className="font-bold text-2xl">
                                     {post.question}
                                  </h1>
                                  <h2 className="font-semibold text-xl">
-                                    {post.username}
+                                    {post.user.username}
                                  </h2>
-                                 <p className="text-gray-400 text-lg">{new Date(post.datetime).toLocaleDateString()}</p>
+                                 <p className="text-gray-400 text-lg">{new Date(post.timestamp).toLocaleDateString()}</p>
                                 </div>
                             </Card.Header>
                             <Card.Body className="p-8 text-bitBrown">
                                 {post.answer}
                             </Card.Body>
-                            <Card.Footer className="w-full">
-                                <div className="flex bg-yellow-400 text-bitBrown p-2">
-                                <button className="flex bg-bitBrown text-white p-2 m-4 rounded-lg ms-2" onClick={()=>toggleComments(index)}>
-                                    <p>10</p>
-                                    <IonIcon icon={chatboxEllipsesSharp} className="text-white"/>
-                                </button>
-                                </div>
-                                {showComments[index] && (<Comments disable={true} comments={samplecommentsWithUsernameAndDatetime}/>)}
-                            </Card.Footer>
                         </Card>
                     ))}
                 </Card.Body>

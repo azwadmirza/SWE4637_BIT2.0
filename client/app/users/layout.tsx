@@ -7,11 +7,11 @@ const LoginLayout = ({
     children: React.ReactNode;
   }>) => {
     return (
-      <>
+      <div className="w-full"> 
       <NavBar/>
       {children}
       <Footer/>
-      </>
+      </div>
     );
   };
   

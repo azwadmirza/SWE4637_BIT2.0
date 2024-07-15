@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <title>BIT</title>
-      <link rel="icon" type="image/x-icon" href={"/images/Bit.png"}></link>
+      <link rel="icon" type="image/x-icon" href="/images/Bit.png"></link>
       <body className={`${inter.className} w-full bg-bitBrown`}>
         {children}
       </body>

@@ -1,0 +1,1 @@
+export const tailwindError="w-full text-red-800 bg-red-200 border border-red-800 p-4 rounded-md"

@@ -24,7 +24,7 @@ const NavBar = () => {
 
     return (
         <>
-            <nav className="w-full overflow-hidden" onMouseLeave={() => {
+            <nav className="w-full overflow-hidden z-50" onMouseLeave={() => {
                 if (userOptionsOpen) {
                     setUserOptionsOpen(false);
                 }
@@ -38,21 +38,17 @@ const NavBar = () => {
                     </div>
                     <div className="hidden w-full md:block md:w-auto ml-auto" id="navbar-default">
                         <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
-                            <Link href="/users"><li className={`ms-4 me-4 ${currentPath === "/users" ? "bg-yellow-400 border border-bitBrown text-bitBrown" : ""} rounded-lg px-4 py-2 mt-4 hover:bg-white hover:text-black hover:border-black`}>Dashboard</li></Link>
                             <Link href="/users/groups"><li className={`ms-4 me-4 ${currentPath === "/users/groups" ? "bg-yellow-400 border border-bitBrown text-bitBrown" : ""} rounded-lg px-4 py-2 mt-4 hover:bg-white hover:text-black hover:border-black`}>
                                 Groups
                             </li></Link>
                             <Link href="/users/forums"><li className={`ms-4 me-4 ${currentPath === "/users/forums" ? "bg-yellow-400 border border-bitBrown text-bitBrown" : ""} rounded-lg px-4 py-2 mt-4 hover:bg-white hover:text-black hover:border-black`}>
                                 Forums
                             </li></Link>
-                            <Link href="/users/market"><li className={`ms-4 me-4 ${currentPath === "/users/market" ? "bg-yellow-400 border border-bitBrown text-bitBrown" : ""} rounded-lg px-4 py-2 mt-4 hover:bg-white hover:text-black hover:border-black`}>
-                                Market Place
-                            </li></Link>
                             <li className={`ms-4 me-4 rounded-lg py-2 px-6 mt-6 hover:bg-yellow-400 hover:text-black hover:border-black hover:rounded-full hover:cursor-pointer`} onClick={() => setOpenStudyTimer(true)}>
                                 <IonIcon icon={timerOutline} className="text-2xl text-white" />
                             </li>
                             <li className={`ms-4 me-4 rounded-lg px-4 py-2 mt-4 hover:bg-yellow-400 hover:text-black hover:border-black hover:rounded-full`} onClick={toggleUserOptions}>
-                                <Image src="/images/monstrosity.png" alt="logo" width={50} height={50} className="rounded-full border border-yellow-400" />
+                                <Image src="/images/robot1.png" alt="logo" width={50} height={50} className="rounded-full border border-yellow-400" />
                             </li>
                         </ul>
                     </div>
@@ -67,18 +63,12 @@ const NavBar = () => {
                         </div>
                     </div>
                     {isDropdownOpen && (
-                        <ul className="fixed top-14 bg-bitBrown w-full font-medium flex flex-col p-4 md:p-0 mt-4 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
-                            <Link href="/users"><li className={`ms-4 me-4 ${currentPath === "/users" ? "bg-yellow-400 border border-bitBrown text-bitBrown" : ""} rounded-lg px-4 py-2 mt-4 hover:bg-white hover:text-black hover:border-black`}>
-                                <IonIcon icon={homeSharp}></IonIcon> Dashboard</li>
-                            </Link>
+                        <ul className="fixed top-14 bg-bitBrown w-full font-medium flex flex-col p-4 md:p-0 mt-4 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">   
                             <Link href="/users/groups"><li className={`ms-4 me-4 ${currentPath === "/users/groups" ? "bg-yellow-400 border border-bitBrown text-bitBrown" : ""} rounded-lg px-4 py-2 mt-4 hover:bg-white hover:text-black hover:border-black`}>
                                 <IonIcon icon={peopleCircleSharp}></IonIcon> Groups
                             </li></Link>
                             <Link href="/users/forums"><li className={`ms-4 me-4 ${currentPath === "/users/forums" ? "bg-yellow-400 border border-bitBrown text-bitBrown" : ""} rounded-lg px-4 py-2 mt-4 hover:bg-white hover:text-black hover:border-black`}>
                                 <IonIcon icon={newspaperOutline}></IonIcon> Forums
-                            </li></Link>
-                            <Link href="/users/market"><li className={`ms-4 me-4 ${currentPath === "/users/market" ? "bg-yellow-400 border border-bitBrown text-bitBrown" : ""} rounded-lg px-4 py-2 mt-4 hover:bg-white hover:text-black hover:border-black`}>
-                                <IonIcon icon={storefrontSharp}></IonIcon>Market Place
                             </li></Link>
                             <li className={`ms-4 me-4 rounded-lg px-4 py-2 mt-4 hover:bg-white hover:text-black hover:border-black hover:cursor-pointer`} onClick={() => setOpenStudyTimer(true)}>
                                 <IonIcon icon={timerOutline} /> Study Timer
@@ -94,7 +84,7 @@ const NavBar = () => {
                 </div>
                 <div className="w-full fixed top-24 right-0 flex justify-end p-4">
                     {userOptionsOpen && (
-                        <ul className="bg-yellow-400 w-1/5 rounded-lg py-4">
+                        <ul className="z-10 bg-yellow-400 w-1/5 rounded-lg py-4">
                             <Link href="/users/settings">
                                 <li className={`ms-4 me-4 ${currentPath === "/users/settings" ? "border border-bitBrown" : ""} text-bitBrown rounded-lg px-4 py-2 mt-4 hover:bg-bitBrown hover:text-yellow-400`}>
                                     <IonIcon icon={settingsSharp}></IonIcon> Settings
